@@ -1,4 +1,4 @@
-package com.algos.linearsearch;
+package com.algo.ch01.linearsearch;
 
 import java.lang.Math;
 
