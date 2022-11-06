@@ -21,16 +21,41 @@ package com.algo.ch02.binarysearch;
 public class BinarySearch {
 
     public static void main(String[] args) {
-        int[] haystack = {1, 5, -9, -12, 8, 11, -13};
-        int target = -12;
-        // int index = binarySearch(haystack, target);
-        int index = recBinarySearch(haystack, 0, haystack.length - 1, target);
+        int[] haystack = {-5, -1, 3, 5, 8, 9, 12, 13};
+        int target = 5;
 
-        if (index == -1) {
+        System.out.println("--------------------------------");
+
+        System.out.println("Iterative Binary Search");
+        int index1 = binarySearch(haystack, target);
+        if (index1 == -1) {
             System.out.println(target + " is not in the array");
         } else {
-            System.out.println(target + " is at index " + index);
+            System.out.println(target + " is at index " + index1);
         }
+
+        System.out.println("--------------------------------");
+
+        System.out.println("Binary Search Ascending ordered Array");
+        int[] ascHaystack = {-5, -1, 3, 5, 8, 9, 12, 13};
+        int index3 = orderAgnostincBinarySearch(ascHaystack, target);
+        if (index3 == -1) {
+            System.out.println(target + " is not in the array");
+        } else {
+            System.out.println(target + " is at index " + index3);
+        }
+
+        System.out.println("--------------------------------");
+
+        System.out.println("Binary Search Descending ordered Array");
+        int[] descHaystack = {13, 12, 9, 8, 5, 3, -1, -5};
+        int index4 = orderAgnostincBinarySearch(descHaystack, target);
+        if (index4 == -1) {
+            System.out.println(target + " is not in the array");
+        } else {
+            System.out.println(target + " is at index " + index4);
+        }
+
     }
 
     static int binarySearch(int[] nums, int target) {
@@ -49,25 +74,37 @@ public class BinarySearch {
         return -1;
     }
 
-    static int recBinarySearch(int arr[], int start, int end, int target) {
-        if (end >= start) {
-            // finding mid such that it will not cause integer overflow
-            int mid = start + (end - start) / 2;
+    static int orderAgnostincBinarySearch(int[] arr, int target) {
+        int start = 0;
+        int end = arr.length - 1;
 
-            // If the element is present at the middle itself
-            if (arr[mid] == target) {
-                return mid;
-            } else if (arr[mid] > target) {
-                // If element is smaller than mid, then
-                // it can only be present in left subarray
-                return recBinarySearch(arr, start, mid - 1, target);
-            } else {
-                // Else the element can only be present in right subarray
-                return recBinarySearch(arr, mid + 1, end, target);
-            }
+        // check if array is sorted in asc or desc order
+        boolean isAsc;
+        if (arr[start] < arr[end]) {
+            isAsc = true;
+        } else {
+            isAsc = false;
         }
 
-        // We reach here when element is not present in array
+        while (end >= start) {
+            int mid = start + (end - start) / 2;
+
+            if (arr[mid] == target)  return mid;
+
+            if(isAsc) {
+                if (target < arr[mid]) {
+                    end = mid - 1;
+                } else if (target > arr[mid]) {
+                    start = mid + 1;
+                }
+            } else {
+                if (target < arr[mid]) {
+                    start = mid + 1;
+                } else if(target > arr[mid]) {
+                    end = mid -1;
+                }
+            }
+        }
         return -1;
     }
 }
