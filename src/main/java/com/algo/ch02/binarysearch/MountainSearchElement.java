@@ -4,15 +4,18 @@ package com.algo.ch02.binarysearch;
 Given a mountain array return the minimum index such that,
 arr[i] == target. If such an index does not exist, return -1.
 
+Reference:
+https://leetcode.com/problems/find-in-mountain-array
 */
-public class SearchInMountain {
+
+public class MountainSearchElement {
   public static void main(String[] args) {
-      int[] arr = {1, 2, 3, 4, 9, 8, 7, 6, 5};
-      int peek = search(arr, 5);
+      int[] arr = {4,5,6,7,0,1,2};
+      int target = 1;
+      int peek = search(arr, target);
       System.out.println(peek);
   }
 
-  // https://leetcode.com/problems/find-in-mountain-array/
   static int search(int[] arr, int target) {
     int peak = peakIndexInMountainArray(arr);
     int firstTry = orderAgnosticBS(arr, target, 0, peak);
